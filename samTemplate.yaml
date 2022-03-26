@@ -11,23 +11,11 @@ Resources:
       CodeUri: ./index-photos-copy
       Description: "Lambda function for CD Demo"
       MemorySize: 128
-      Timeout: 3
+      Timeout: 30
       Role: "arn:aws:iam::064696336202:role/service-role/index-photos-role"
       Environment:
         Variables:
           REGION: us-east-1
-      Events:
-        BucketEvent1:
-          Type: S3
-          Properties:
-            Bucket:
-              Ref: Bucket1
-            Events:
-              - 's3:ObjectCreated:Put'
-      Tags:
-        'lambda-console:blueprint': s3-get-object-python
-  Bucket1:
-    Type: 'AWS::S3::Bucket'
   searchphotos:
     Type: "AWS::Serverless::Function"
     Properties:
@@ -37,20 +25,8 @@ Resources:
       CodeUri: ./search-photos-copy
       Description: "Lambda function for CD Demo"
       MemorySize: 128
-      Timeout: 3
+      Timeout: 30
       Role: "arn:aws:iam::064696336202:role/service-role/search-photos-role-jw3smc8x"
       Environment:
         Variables:
           REGION: us-east-1
-      Events:
-        Api1:
-          Type: Api
-          Properties:
-            Path: /MyResource
-            Method: ANY
-        Api2:
-          Type: Api
-          Properties:
-            Path: /search
-            Method: GET
-     
