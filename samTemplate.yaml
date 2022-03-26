@@ -51,25 +51,6 @@ Resources:
         Api2:
           Type: Api
           Properties:
-            Path: /MyResource
-            Method: ANY
-        Api3:
-          Type: Api
-          Properties:
             Path: /search
             Method: GET
-        Api4:
-          Type: Api
-          Properties:
-            Path: /MyResource
-            Method: ANY
-        Api5:
-          Type: Api
-          Properties:
-            Path: /MyResource
-            Method: ANY
-        Api6:
-          Type: Api
-          Properties:
-            Path: /MyResource
-            Method: ANY
+     
