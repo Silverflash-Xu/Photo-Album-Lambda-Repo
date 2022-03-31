@@ -17,6 +17,7 @@ url = host + '/' + index + '/' + type
 
 headers = { "Content-Type": "application/json" }
 
+print("test")
 
 s3 = boto3.client('s3')
 
