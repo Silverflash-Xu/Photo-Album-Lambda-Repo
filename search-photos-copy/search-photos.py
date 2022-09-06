@@ -6,13 +6,10 @@ import logging
 logger = logging.getLogger()
 
 
-# logger.setLevel(logging.DEBUG)
-
 
 def lambda_handler(event, context):
     # print("event",event)
 
-    # msg = event["multiValueQueryStringParameters"]['q']
     query = event["queryStringParameters"]['q']
     print("query", query)
 
@@ -23,14 +20,16 @@ def lambda_handler(event, context):
                                 userId='testuser',
                                 inputText=query)
     print("response", response)
-
+    
+    # Extract labels from users' input
     labels = []
     if 'slots' in response:
         for slot in response['slots']:
             labels.append(response['slots'][slot])
 
     labels = [x for x in labels if x is not None]
-
+    
+    # Constrcut query using 'or' pattern
     query = {
         "query": {
             "bool": {
@@ -45,8 +44,9 @@ def lambda_handler(event, context):
             }
         }
         query['query']['bool']['should'].append(new_query)
-
-    host = 'https://search-photos-kqcgjzgvw4w4n4r7kn6cvlhthu.us-east-1.es.amazonaws.com'  # the OpenSearch Service domain, including https://
+    
+    # Do the search with Opensearch, get the photo links
+    host = 'https://search-photos-kqcgjzgvw4w4n4r7kn6cvlhthu.us-east-1.es.amazonaws.com'
     index = 'photos'
     type = '_search'
     url = host + '/' + index + '/' + type
@@ -62,6 +62,8 @@ def lambda_handler(event, context):
     print(es_res)
     res_str = ''
     
+    
+    # Construct the photo links into a string and return it
     if len(res_list) != 0:
         for item in res_list:
             if item['_source']['objectKey'] not in res_str:
